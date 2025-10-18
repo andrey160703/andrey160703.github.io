@@ -15,12 +15,28 @@
         Работаю в индустрии, создаю решения, которые действительно работают.  
         Сейчас учусь в Вышке и осваиваю машинное обучение — пытаюсь научить машину понимать мир.
       </p>
-      <a href="resume.pdf" target="_blank" class="btn">📄 Посмотреть резюме</a>
+      <button id="toggleBtn" class="btn">📄 Развернуть резюме</button>
+      <div id="resumeContainer" class="resume hidden">
+        <object data="resume.pdf" type="application/pdf" width="100%" height="600px">
+          <p>Ваш браузер не поддерживает PDF. <a href="resume.pdf">Скачать файл</a>.</p>
+        </object>
+      </div>
     </div>
   </main>
 
   <footer>
     <p>© 2025 Andrey Guseff</p>
   </footer>
+
+  <script>
+    const btn = document.getElementById('toggleBtn');
+    const resume = document.getElementById('resumeContainer');
+    let open = false;
+    btn.addEventListener('click', () => {
+      open = !open;
+      resume.classList.toggle('hidden', !open);
+      btn.textContent = open ? '🔽 Скрыть резюме' : '📄 Развернуть резюме';
+    });
+  </script>
 </body>
 </html>
