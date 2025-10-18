@@ -2,40 +2,58 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Andrey Guseff — Developer</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="center">
-    <div class="content">
-      <h1>Andrey Guseff</h1>
-      <p class="subtitle">Разработчик, который говорит на разных языках — от Python до JavaScript.</p>
-      <p class="text">
-        Работаю в индустрии, создаю решения, которые действительно работают.  
-        Сейчас учусь в Вышке и осваиваю машинное обучение!
-      </p>
-      <button id="toggleBtn" class="btn">📄 Развернуть резюме</button>
-      <div id="resumeContainer" class="resume hidden">
-        <object data="resume.pdf" type="application/pdf" width="100%" height="600px">
-          <p>Ваш браузер не поддерживает PDF. <a href="resume.pdf">Скачать файл</a>.</p>
+  <main class="wrap">
+    <section class="card">
+      <h1 class="title">Andrey Guseff</h1>
+      <p class="lead">Вы на сайте разработчика, который пишет на разных языках и работает в индустрии.</p>
+      <p class="muted">Сейчас учусь в Вышке и осваиваю машинное обучение.</p>
+      <div class="actions">
+        <button id="toggleBtn" class="btn">📄 Развернуть резюме</button>
+      </div>
+      <div id="resumeContainer" class="resume" hidden>
+        <object data="resume.pdf" type="application/pdf" width="100%" height="640">
+          <p>Браузер не поддерживает PDF. <a href="resume.pdf">Скачать резюме</a>.</p>
         </object>
       </div>
-    </div>
+    </section>
   </main>
 
-  <footer>
-    <p>© 2025 Andrey Guseff</p>
-  </footer>
+  <footer class="foot">© 2025 Andrey Guseff</footer>
 
   <script>
     const btn = document.getElementById('toggleBtn');
     const resume = document.getElementById('resumeContainer');
-    let open = false;
+    let isOpen = false;
+
+    function showResume() {
+      resume.hidden = false;
+      resume.classList.add('opening');
+      requestAnimationFrame(() => {
+        resume.classList.add('open');
+        resume.classList.remove('opening');
+      });
+      btn.textContent = '🔽 Скрыть резюме';
+      isOpen = true;
+    }
+
+    function hideResume() {
+      resume.classList.remove('open');
+      const onEnd = () => {
+        resume.hidden = true;
+        resume.removeEventListener('transitionend', onEnd);
+      };
+      resume.addEventListener('transitionend', onEnd);
+      btn.textContent = '📄 Развернуть резюме';
+      isOpen = false;
+    }
+
     btn.addEventListener('click', () => {
-      open = !open;
-      resume.classList.toggle('hidden', !open);
-      btn.textContent = open ? '🔽 Скрыть резюме' : '📄 Развернуть резюме';
+      isOpen ? hideResume() : showResume();
     });
   </script>
 </body>
